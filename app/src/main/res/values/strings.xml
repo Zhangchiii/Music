@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Music</string>
+    <string name="previous">上一首</string>
+    <string name="repeat">循环</string>
+    <string name="play">播放</string>
+    <string name="shuffle">随机</string>
+    <string name="next">下一首</string>
+    <string name="title">歌名</string>
+    <string name="duration">时长</string>
+    <string name="artist">歌手</string>
+</resources>
