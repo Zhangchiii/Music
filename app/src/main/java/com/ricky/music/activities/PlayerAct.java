@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -35,9 +36,9 @@ public class PlayerAct extends Activity implements View.OnClickListener, SeekBar
     private TextView musicArtist;
     private ImageView musicAlbum;
     private ImageView musicAblumReflection;
-    private Button previousBtn;
-    private Button playBtn;
-    private Button nextBtn;
+    private ImageButton previousBtn;
+    private ImageButton playBtn;
+    private ImageButton nextBtn;
     private SeekBar musicProgressBar;
     private TextView currentProgress;
     private TextView finalProgress;
@@ -78,9 +79,9 @@ public class PlayerAct extends Activity implements View.OnClickListener, SeekBar
         musicArtist = (TextView) findViewById(R.id.musicArtist);
         musicAlbum = (ImageView) findViewById(R.id.music_album);
         musicAblumReflection = (ImageView) findViewById(R.id.music_album_reflection);
-        previousBtn = (Button) findViewById(R.id.previous_music);
-        playBtn = (Button) findViewById(R.id.play_music);
-        nextBtn = (Button) findViewById(R.id.next_music);
+        previousBtn = (ImageButton) findViewById(R.id.previous_music);
+        playBtn = (ImageButton) findViewById(R.id.play_music);
+        nextBtn = (ImageButton) findViewById(R.id.next_music);
         musicProgressBar = (SeekBar) findViewById(R.id.music_progress_bar);
         currentProgress = (TextView) findViewById(R.id.current_progress);
         finalProgress = (TextView) findViewById(R.id.final_progress);
@@ -100,9 +101,9 @@ public class PlayerAct extends Activity implements View.OnClickListener, SeekBar
         isPlay = bundle.getBoolean("isPlay");
         isPause = bundle.getBoolean("isPause");
         if (isPlay) {
-            playBtn.setText("暂停");
+            playBtn.setImageResource(R.mipmap.pause);
         } else if (isPause) {
-            playBtn.setText("播放");
+            playBtn.setImageResource(R.mipmap.play);
         }
     }
 
@@ -119,7 +120,7 @@ public class PlayerAct extends Activity implements View.OnClickListener, SeekBar
                 if (isPlay) {
                     isPlay = false;
                     isPause = true;
-                    playBtn.setText("播放");
+                    playBtn.setImageResource(R.mipmap.play);
                     Intent intent = new Intent();
                     intent.setClass(PlayerAct.this, PlayerService.class);
                     intent.putExtra("msg", AppConstant.PlayerMsg.PAUSE_MSG);
@@ -128,7 +129,7 @@ public class PlayerAct extends Activity implements View.OnClickListener, SeekBar
                 } else if (isPause) {
                     isPlay = true;
                     isPause = false;
-                    playBtn.setText("暂停");
+                    playBtn.setImageResource(R.mipmap.pause);
                     Intent intent = new Intent();
                     intent.setClass(PlayerAct.this, PlayerService.class);
                     intent.putExtra("msg", AppConstant.PlayerMsg.CONTINUE_MSG);
@@ -141,7 +142,7 @@ public class PlayerAct extends Activity implements View.OnClickListener, SeekBar
     private void previous() {
 
         if (listPosition > 0) {
-            playBtn.setText("暂停");
+            playBtn.setImageResource(R.mipmap.pause);
             listPosition = listPosition - 1;
             goService(listPosition, AppConstant.PlayerMsg.PRIVIOUS_MSG);
         } else {
@@ -153,7 +154,7 @@ public class PlayerAct extends Activity implements View.OnClickListener, SeekBar
 
         if (listPosition < infoList.size() - 1) {
             listPosition = listPosition + 1;
-            playBtn.setText("暂停");
+            playBtn.setImageResource(R.mipmap.pause);
             goService(listPosition, AppConstant.PlayerMsg.NEXT_MSG);
         } else {
             Toast.makeText(PlayerAct.this, "没有下一首歌啦！", Toast.LENGTH_SHORT).show();
@@ -218,9 +219,9 @@ public class PlayerAct extends Activity implements View.OnClickListener, SeekBar
                 isPlay = intent.getBooleanExtra("isPlay", false);
                 isPause = intent.getBooleanExtra("isPause", false);
                 if (isPlay) {
-                    playBtn.setText("暂停");
+                    playBtn.setImageResource(R.mipmap.pause);
                 } else if (isPause) {
-                    playBtn.setText("播放");
+                    playBtn.setImageResource(R.mipmap.play);
                 }
             }
         }

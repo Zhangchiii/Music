@@ -11,26 +11,34 @@
         android:background="#0E1725"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/previous" />
+            android:padding="10dp"
+            android:src="@mipmap/previous"
+            android:background="#0E1725"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/play" />
+            android:padding="10dp"
+            android:background="#0E1725"
+            android:src="@mipmap/play"
+             />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/next" />
+            android:src="@mipmap/next"
+            android:padding="10dp"
+            android:background="#0E1725"
+            />
     </LinearLayout>
 
     <ListView

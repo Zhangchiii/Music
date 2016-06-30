@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -36,9 +37,9 @@ public class IndexAct extends Activity implements AdapterView.OnItemClickListene
 
     IndexReceiver indexReceiver;
 
-    private Button playBtn;
-    private Button previousBtn;
-    private Button nextBtn;
+    private ImageButton playBtn;
+    private ImageButton previousBtn;
+    private ImageButton nextBtn;
     private TextView musicTitle;
     private TextView musicArtist;
     private ImageView photo;
@@ -46,7 +47,7 @@ public class IndexAct extends Activity implements AdapterView.OnItemClickListene
 
     private boolean isPlay;
     private boolean isPause;
-    private boolean isFirstTime = false;
+    private boolean isFirstTime;
 
     private int listPosition = -1;
     private int currentTime;
@@ -72,9 +73,9 @@ public class IndexAct extends Activity implements AdapterView.OnItemClickListene
     }
 
     private void init() {
-        previousBtn = (Button) findViewById(R.id.btn_previous);
-        playBtn = (Button) findViewById(R.id.btn_play);
-        nextBtn = (Button) findViewById(R.id.btn_next);
+        previousBtn = (ImageButton) findViewById(R.id.btn_previous);
+        playBtn = (ImageButton) findViewById(R.id.btn_play);
+        nextBtn = (ImageButton) findViewById(R.id.btn_next);
         musicTitle = (TextView) findViewById(R.id.music_title);
         musicArtist = (TextView) findViewById(R.id.music_artist);
         photo = (ImageView) findViewById(R.id.photo);
@@ -102,7 +103,7 @@ public class IndexAct extends Activity implements AdapterView.OnItemClickListene
                 isFirstTime = false;
                 isPause = false;
                 isPlay = true;
-                playBtn.setText("暂停");
+                playBtn.setImageResource(R.mipmap.pause);
                 musicTitle.setText(infoList.get(listPosition).getTitle());
                 musicArtist.setText(infoList.get(listPosition).getArtist());
                 Bitmap bitmap = Mp3Dao.getArtWork(IndexAct.this, infoList.get(listPosition).getId(), infoList.get(listPosition).getAlbumId(), true, true);
@@ -155,7 +156,7 @@ public class IndexAct extends Activity implements AdapterView.OnItemClickListene
                     isPlay = true;
                     isPause = false;
                     listPosition = 0;
-                    playBtn.setText("暂停");
+                    playBtn.setImageResource(R.mipmap.pause);
                     Mp3Info mp3Info = new Mp3Info();
                     mp3Info = infoList.get(listPosition);
                     musicTitle.setText(mp3Info.getTitle());
@@ -172,7 +173,7 @@ public class IndexAct extends Activity implements AdapterView.OnItemClickListene
                     isPlay = false;
                     isPause = true;
                     isFirstTime = false;
-                    playBtn.setText("播放");
+                    playBtn.setImageResource(R.mipmap.play);
                     Intent intent = new Intent();
                     intent.setClass(IndexAct.this, PlayerService.class);
                     intent.putExtra("msg", AppConstant.PlayerMsg.PAUSE_MSG);
@@ -180,7 +181,7 @@ public class IndexAct extends Activity implements AdapterView.OnItemClickListene
                 } else if (isPause) {
                     isPlay = true;
                     isPause = false;
-                    playBtn.setText("暂停");
+                    playBtn.setImageResource(R.mipmap.pause);
                     Intent intent = new Intent();
                     intent.setClass(IndexAct.this, PlayerService.class);
                     intent.putExtra("msg", AppConstant.PlayerMsg.CONTINUE_MSG);
@@ -209,7 +210,7 @@ public class IndexAct extends Activity implements AdapterView.OnItemClickListene
 
         if (listPosition < infoList.size() - 1) {
             listPosition = listPosition + 1;
-            playBtn.setText("暂停");
+            playBtn.setImageResource(R.mipmap.pause);
             goService(listPosition, AppConstant.PlayerMsg.NEXT_MSG);
         } else {
             Toast.makeText(IndexAct.this, "没有下一首歌啦！", Toast.LENGTH_SHORT).show();
@@ -220,7 +221,7 @@ public class IndexAct extends Activity implements AdapterView.OnItemClickListene
 
         if (listPosition > 0) {
             listPosition = listPosition - 1;
-            playBtn.setText("暂停");
+            playBtn.setImageResource(R.mipmap.pause);
             goService(listPosition, AppConstant.PlayerMsg.PRIVIOUS_MSG);
         } else {
             Toast.makeText(IndexAct.this, "没有上一首歌啦", Toast.LENGTH_SHORT).show();
@@ -264,9 +265,9 @@ public class IndexAct extends Activity implements AdapterView.OnItemClickListene
                 isPlay = intent.getBooleanExtra("isPlay", false);
                 isPause = intent.getBooleanExtra("isPause", false);
                 if (isPlay) {
-                    playBtn.setText("暂停");
+                    playBtn.setImageResource(R.mipmap.pause);
                 } else if (isPause) {
-                    playBtn.setText("播放");
+                    playBtn.setImageResource(R.mipmap.play);
                 }
             }
         }

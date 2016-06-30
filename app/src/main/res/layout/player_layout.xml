@@ -106,26 +106,32 @@
             android:layout_below="@+id/seekbarLayout"
             android:background="#0E1725">
 
-            <Button
+            <ImageButton
                 android:id="@+id/previous_music"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="上一首" />
+                android:src="@mipmap/previous"
+                android:background="#0E1725"
+                android:padding="10dp"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/play_music"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="播放" />
+                android:padding="10dp"
+                android:src="@mipmap/play"
+                android:background="#0E1725"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/next_music"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="下一首" />
+                android:background="#0E1725"
+                android:src="@mipmap/next"
+                android:padding="10dp"/>
 
         </LinearLayout>
     </RelativeLayout>
