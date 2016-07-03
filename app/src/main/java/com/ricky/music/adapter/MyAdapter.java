@@ -2,6 +2,7 @@ package com.ricky.music.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.ricky.music.R;
 import com.ricky.music.bean.Mp3Info;
 import com.ricky.music.dao.Mp3Dao;
+import com.ricky.music.thread.Image;
 
 import java.util.List;
 
@@ -24,10 +26,11 @@ public class MyAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Mp3Info mp3Info;
     private Context context;
+    private Handler handler=new Handler();
 
     public MyAdapter(Context context, List<Mp3Info> list) {
-        mList = list;
-        mInflater = LayoutInflater.from(context);
+        this.mList = list;
+        this.mInflater = LayoutInflater.from(context);
         this.context = context;
     }
 
@@ -53,7 +56,7 @@ public class MyAdapter extends BaseAdapter {
         if (view == null) {
             viewHolder = new ViewHolder();
             view = mInflater.inflate(R.layout.item, null);
-            viewHolder.albumImage = (ImageView) view.findViewById(R.id.albumImage);
+            viewHolder.albumImage= (ImageView) view.findViewById(R.id.albumImage);
             viewHolder.title = (TextView) view.findViewById(R.id.music_title);
             viewHolder.artist = (TextView) view.findViewById(R.id.music_artist);
             viewHolder.duration = (TextView) view.findViewById(R.id.music_duration);
@@ -62,11 +65,10 @@ public class MyAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
         mp3Info = mList.get(i);
-        Bitmap bitmap = Mp3Dao.getArtWork(context, mp3Info.getId(), mp3Info.getAlbumId(), true, true);
-        viewHolder.albumImage.setImageBitmap(bitmap);
         viewHolder.title.setText(mp3Info.getTitle());
         viewHolder.artist.setText(mp3Info.getArtist());
         viewHolder.duration.setText(mp3Info.getDuration());
+        new Image(context,viewHolder.albumImage,handler,mp3Info.getAlbumId(),true).start();
         return view;
     }
 

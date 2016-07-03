@@ -25,6 +25,7 @@ import java.util.List;
  */
 public class Mp3Dao {
 
+    private static final Uri albumArtUri = Uri.parse("content://media/external/audio/albumart");
     List<Mp3Info> infoList;
     Mp3Info mp3Info;
     long id;
@@ -36,8 +37,6 @@ public class Mp3Dao {
     int isMusic;
     String album;
     long albumId;
-
-    private static final Uri albumArtUri = Uri.parse("content://media/external/audio/albumart");
 
     public List<Mp3Info> GetMp3Infos(Context context) {
 
@@ -77,17 +76,17 @@ public class Mp3Dao {
     public static Bitmap getArtWork(Context context, long id, long albumId, boolean allowDefault, boolean small) {
         ContentResolver resolver = context.getContentResolver();
         Uri uri = ContentUris.withAppendedId(albumArtUri, albumId);
-        if(uri != null) {
-            InputStream inputStream=null;
+        if (uri != null) {
+            InputStream inputStream = null;
             try {
-                inputStream=resolver.openInputStream(uri);
-                BitmapFactory.Options options=new BitmapFactory.Options();
+                inputStream = resolver.openInputStream(uri);
+                BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inJustDecodeBounds = true;
                 BitmapFactory.decodeStream(inputStream, null, options);
-                if(small){
-                    options.inSampleSize=options.outWidth/100;
-                }else{
-                    options.inSampleSize=options.outWidth/800;
+                if (small) {
+                    options.inSampleSize = options.outWidth / 100;
+                } else {
+                    options.inSampleSize = options.outWidth / 800;
                 }
 
                 options.inJustDecodeBounds = false;
@@ -95,10 +94,12 @@ public class Mp3Dao {
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 inputStream = resolver.openInputStream(uri);
                 return BitmapFactory.decodeStream(inputStream, null, options);
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
+
         return null;
     }
 
